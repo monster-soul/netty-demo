@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="log.dir" value="logs"></property>
+
+    <!-- 控制台 appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger - %highlight(%msg) %n</pattern>
+        </encoder>
+    </appender>
+    <!-- 出错日志 appender  -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <!-- log.dir 在maven profile里配置 -->
+            <fileNamePattern>${log.dir}/%d{yyyy-MM-dd}/error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 30天 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!-- 访问日志 appender  -->
+    <appender name="ACCESS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log.dir}/%d{yyyy-MM-dd}/access-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 30天 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- info日志 appender  -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log.dir}/%d{yyyy-MM-dd}/info-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 30天 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- debug日志 appender  -->
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log.dir}/%d{yyyy-MM-dd}/debug-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 30天 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="ACCESS"/>
+    </root>
+
+    <!--日志打印的包的范围，及分类日志文件存储 -->
+    <!-- name值可以是包名或具体的类名：该包（包括子包）下的类或该类将采用此logger -->
+    <logger name="com.edu" additivity="false">
+        <level value="info" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="ACCESS"/>
+    </logger>
+
+    <logger name="org.springframework.jdbc.core" additivity="true">
+        <level value="info" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="ACCESS"/>
+    </logger>
+    <logger name="java.sql.Connection" additivity="true">
+        <level value="info" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="ACCESS"/>
+    </logger>
+    <logger name="java.sql.Statement" additivity="true">
+        <level value="info" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="ACCESS"/>
+    </logger>
+    <logger name="java.sql.PreparedStatement" additivity="true">
+        <level value="info" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="ACCESS"/>
+    </logger>
+    <logger name="java.sql.ResultSet" additivity="true">
+        <level value="info" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="ACCESS"/>
+    </logger>
+
+<!--    &lt;!&ndash;JdbcTemplate的日志输出器 &ndash;&gt;-->
+<!--    <logger name="org.springframework.jdbc.core.StatementCreatorUtils"-->
+<!--            additivity="false" level="info">-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--        <appender-ref ref="DEBUG"/>-->
+<!--        <appender-ref ref="INFO"/>-->
+<!--        <appender-ref ref="ERROR"/>-->
+<!--        <appender-ref ref="ACCESS"/>-->
+<!--    </logger>-->
+
+<!--    <logger name="org.hibernate.SQL" additivity="false" >-->
+<!--        <level value="DEBUG" />-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--        <appender-ref ref="DEBUG"/>-->
+<!--        <appender-ref ref="INFO"/>-->
+<!--        <appender-ref ref="ERROR"/>-->
+<!--        <appender-ref ref="ACCESS"/>-->
+<!--    </logger>-->
+
+<!--    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" additivity="false">-->
+<!--        <level value="TRACE" />-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--        <appender-ref ref="DEBUG"/>-->
+<!--        <appender-ref ref="INFO"/>-->
+<!--        <appender-ref ref="ERROR"/>-->
+<!--        <appender-ref ref="ACCESS"/>-->
+<!--    </logger>-->
+
+</configuration>

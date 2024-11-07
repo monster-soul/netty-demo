@@ -1,0 +1,27 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+spring:
+  profiles:
+    active:
+    include: project
+
+#logging:
+#  # 日志文件路径
+#  config: classpath:logback-spring.xml
+
+##MybatisPlus配置
+#mybatis-plus:
+#  mapper-locations: classpath*:mapper/**/*.xml
+##  typeEnumsPackage:
+##  type-handlers-package:
+#  global-config:
+#    db-config:
+#      table-prefix: tb_
+#      schema: lj_xc_gateway
+#  configuration-properties:
+#    table-prefix: ${mybatis-plus.global-config.db-config.schema}.${mybatis-plus.global-config.db-config.table-prefix}
+#  configuration:
+#    map-underscore-to-camel-case: true
+##    log-impl:
